@@ -41,7 +41,7 @@ import { InmodalComponent } from './inmodal.component';
 export class AppModule { }
 ```
 
-- Inject `NgxDialigicService` in some application component and use method `show` with `InmodalComponent` as argument
+- Inject `NgxDial0gicService` in some application component and use method `show` with `InmodalComponent` as argument
 
 ```typescript
 import { Component } from '@angular/core';
