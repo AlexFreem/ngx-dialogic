@@ -1,27 +1,112 @@
-# NgxDialogicApp
+# ngx-dialogic
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+Dialog box for your Angular 6 application with additional logic.
 
-## Development server
+Allows you to:
+Use the resolver to retrieve data
+Use the component as the contents of the dialog box
+Send and receive data using @Input and @Output
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Demo
 
-## Code scaffolding
+Clone this repo, install dependencies and run
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`npm run start`
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+`npm install ngx-dialogic --save`
 
-## Running unit tests
+## Simple Usage
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Create a component that you plan to display in the dialog box. For example with name `InmodalComponent`
+- Include `NgxDialogicModule` to `imports` section of your root module
+- Include `InmodalComponent` to `entryComponents` section of your root module
 
-## Running end-to-end tests
+```typescript
+import { NgModule } from '@angular/core';
+import { NgxDialogicModule } from 'ngx-dialogic';
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+import { InmodalComponent } from './inmodal.component';
 
-## Further help
+@NgModule({
+  // ...
+  imports: [
+    NgxDialogicModule
+  ],
+  entryComponents: [
+    InmodalComponent
+  ]
+})
+export class AppModule { }
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Inject `NgxDialigicService` in some application component and use method `show` with `InmodalComponent` as argument
+
+```typescript
+import { Component } from '@angular/core';
+import { NgxDialogicService } from 'ngx-dialogic';
+
+import { InmodalComponent } from './inmodal.component';
+
+@Component({
+  // ...
+})
+export class AppComponent {
+  constructor(private dialog: NgxDialogicService) {
+    this.dialog.show(InmodalComponent);
+  }
+}
+```
+
+## Resolve data, pass data to component as @Input and @Output, close by click on overlay, vertical alignment
+
+Method `show` can be used with optional parameter `config`
+
+```typescript
+this.dialog.show(
+  InmodalComponent,
+  {
+    resolve: {
+      userData: UserDataResolve
+    },
+    data: {
+      sampleInput: 'Any value',
+      callbackHandler: (callbackArg) => { }
+    },
+    options: {
+      isTopAligned: true,
+      closeOnOverlay: true
+    }
+  }
+);
+```
+
+- `resolve` - Object with values of type [Resolve](https://angular.io/api/router/Resolve). Resolved data can be injected to modal component via `MODAL_DATA_TOKEN`
+- `data` - Object with values for `@Input` and `@Output`
+
+```typescript
+import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { MODAL_DATA_TOKEN, NgxDialogicService } from 'ngx-dialogic';
+
+@Component({
+  // ...
+})
+export class InmodalComponent {
+  
+  @Input() sampleInput;
+  @Output() callbackHandler = new EventEmitter<boolean>();
+  
+  constructor(
+    @Inject(MODAL_DATA_TOKEN) private resolvedData,
+    private dialog: NgxDialogicService
+  ) { }
+  
+  clickHandler () {
+    this.callbackHandler.emit(true);
+    this.dialog.hide(); // Closes currently open dialog
+  }
+}
+```
+
+- `options` - `closeOnOverlay` - closes dialog box by click on overlay. `isTopAligned` - appends additional class for display component with large content.

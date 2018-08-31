@@ -1,0 +1,57 @@
+app-root {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.links-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.link {
+  padding: 10px 20px;
+  margin: 0 10px 0 0;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.link:active,
+.link:focus {
+  outline: none;
+}
+
+.link--red {
+  background-color: #e74c3c;
+  border-bottom: 3px solid #c0392b;
+  text-shadow: 0 2px #c0392b;
+}
+
+.link--blue {
+  background-color: #3498db;
+  border-bottom: 3px solid #2980B9;
+  text-shadow: 0 2px #2980B9;
+}
+
+
+
+.link--green {
+  background-color: #2ecc71;
+  border-bottom: 3px solid #27ae60;
+  text-shadow: 0 2px #27ae60;
+}

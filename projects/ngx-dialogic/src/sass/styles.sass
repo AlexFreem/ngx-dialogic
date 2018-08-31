@@ -1,0 +1,162 @@
+$ngx-dialogic-animate-duration: .2s
+$ngx-dialogic-color-white: #fff
+$ngx-dialogic-box-shadow: 0px 3px 11px rgba(0, 0, 0, 0.1)
+$ngx-dialogic-element-border-radius: 2px
+$ngx-dialogic-main-color: #0094ff
+
+@keyframes opacityIn
+  0%
+    opacity: 0
+
+  100%
+    opacity: 1
+
+@keyframes slideInTopPx
+  0%
+    top: 150px
+    opacity: 0
+
+  100%
+    top: 100px
+    opacity: 1
+
+@keyframes slideInTopEm
+  0%
+    top: 4em
+    opacity: 0
+
+  100%
+    top: 2em
+    opacity: 1
+
+@keyframes slideInMarginStatic
+  0%
+    margin-top: 2em
+    opacity: 0
+
+  100%
+    margin-top: 0
+    opacity: 1
+
+@keyframes anim-1
+  0%
+
+  25%
+    transform: translate(-15px)
+
+  50%
+    transform: translate(-15px) translateY(-15px)
+
+  60%
+    transform: translate(0)
+
+@keyframes anim-2
+  0%
+
+  25%
+    transform: translate(15px)
+
+  50%
+    transform: translate(15px) translateY(-15px)
+
+  70%
+    transform: translate(0)
+
+@keyframes anim-3
+  0%
+
+  25%
+    transform: translate(15px)
+
+  50%
+    transform: translate(15px) translateY(15px)
+
+  75%
+    transform: translate(0)
+
+@keyframes anim-4
+  0%
+
+  25%
+    transform: translate(-15px)
+
+  50%
+    transform: translate(-15px) translateY(15px)
+
+  73%
+    transform: translate(0)
+
+@keyframes rotate-all
+  0%
+
+  100%
+    transform: rotate(-360deg)
+
+.ngx-dialogic-overlay
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: rgba(0, 0, 0, .5)
+  z-index: 10
+  display: flex
+  justify-content: center
+  align-items: center
+  overflow: auto
+  animation: $ngx-dialogic-animate-duration ease-out 0s 1 opacityIn
+
+ngx-dialogic
+  background-color: $ngx-dialogic-color-white
+  margin-bottom: 2em
+  max-width: 400px
+  min-width: 200px
+  display: flex
+  flex-direction: column
+  border-radius: $ngx-dialogic-element-border-radius
+  box-shadow: $ngx-dialogic-box-shadow
+  animation: $ngx-dialogic-animate-duration ease-out 0s 1 slideInMarginStatic
+
+  &.ngx-dialogic-component--top-aligned
+    top: 100px
+    position: absolute
+    animation: $ngx-dialogic-animate-duration ease-out 0s 1 slideInTopPx
+
+  .ngx-dialogic-header
+    background-color: $ngx-dialogic-main-color
+    padding: .5em
+
+  .ngx-dialogic-close
+    float: right
+    cursor: pointer
+
+    &:before
+      content: '\2A2F'
+      color: $ngx-dialogic-color-white
+
+.ngx-dialogic-loader-content
+  width: 10px
+  height: 10px
+  display: flex
+  justify-content: center
+  align-items: center
+  animation: calc(2s * 2.3) infinite linear rotate-all
+
+  .ngx-dialogic-loader-item
+    position: absolute
+    width: 10px
+    height: 10px
+    border-radius: 100%
+    background-color: #ffffff
+
+    &:first-child
+      animation: 2s infinite ease-in-out anim-1
+
+    &:nth-child(2)
+      animation: 2s infinite ease-in-out anim-2
+
+    &:nth-child(3)
+      animation: 2s infinite ease-in-out anim-3
+
+    &:last-child
+      animation: 2s infinite ease-in-out anim-4
